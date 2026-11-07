@@ -1,0 +1,30 @@
+# Secrets: never commit the real .env (use .env.example)
+.env
+.env.*
+!.env.example
+# The dashboard's API address (not a secret)
+!frontend/.env.development
+
+# Both databases ARE committed: data/campus_customs.db (original) and
+# data/campus_customs_new.db (working copy, in its final Problem 9 state).
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node / Vite
+node_modules/
+dist/
+*.local
+
+# Editors and OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local settings (per-machine approvals)
+.claude/settings.local.json
