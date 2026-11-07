@@ -441,3 +441,49 @@ Each problem is described one at a time in the student's own words. The full ass
      - two-way vendor and customer messages (`send_message` behind approval, `read_inbox`, `create_ticket`; a Vendor Relations agent);
      - cash-shortfall planning (`forecast_cash`, `schedule_payment`, `propose_payment_plan`; a Treasury agent).
 - Fixed phone layout: the page's table cards had used the delegation-table labels on every table. Each cell now shows its own table's column name. Checked at 375px (no sideways scrolling) and on desktop.
+
+## Problem 11 — Submit to GitHub
+
+### Original prompt
+
+> **Problem 11: Submit to GitHub**
+>
+> Please prepare the completed project for submission and push it to a public GitHub repository that graders can clone. Save the repository URL in `output/github_url.txt` and submit that same URL to Canvas.
+>
+> Exclude the real `.env` file from GitHub. Include `.env.example` with placeholder values and ensure `.gitignore` protects the real environment file. Include both the original and working databases.
+>
+> Check that the `hw5/` project contains these files and folders:
+>
+> | Location | Required contents |
+> |---|---|
+> | Project root | `AI_prompts.md`, `requirements.txt`, `.env.example`, `.gitignore`, `.mcp.json`, `README.md` |
+> | `data/` | `campus_customs.db`, `campus_customs_new.db` |
+> | `mcp_server/` | `server.py`, `README.md` |
+> | `frontend/` | React dashboard source and configuration |
+> | `backend/` | Agent implementation, `main.py`, `models.py` |
+> | `backend/prompts/` | `boss.md`, `inventory.md`, `accounting.md`, `facilities.md`, `customer_service.md` |
+> | `output/` | `harness.md`, `mcp_smoke.json`, `desk_tickets.html`, `design.md`, `resolved_tickets.json`, `resolved_board.html`, `audit_trail.json`, `github_url.txt` |
+>
+> Update the root `README.md` with clear instructions for restoring the working database from the original, starting the MCP server, launching the FastAPI backend, and starting the React dashboard. Explain that the database should be reset before a complete run of all three tickets.g
+
+### Work completed
+
+- **`.gitignore`:** removed the rule that excluded `data/campus_customs_new.db`, so both databases ship (the working copy in its final Problem 9 state). `.env`, `.env.*`, `.venv/`, `node_modules/` and local Claude settings stay ignored. `.env.example` (placeholders only) and `frontend/.env.development` (API address, not a secret) are included.
+- **Folder references:** replaced "Homework 5 folder" wording in `.env.example`, `backend/config.py`, `mcp_server/README.md` and `output/harness.md` with "project root (`hw5/`)", so the instructions make sense after cloning.
+- **Root `README.md`:**
+  - requirements and one-time setup (`.venv`, `pip install`, `.env` from `.env.example`, `npm install`);
+  - **resetting the working database from the original**, three ways (`python -m backend.reset_db`, `cp`, or the dashboard's Reset shop), with a clear note that it must be reset before a full run because it's committed in its final state;
+  - starting the MCP server (`python mcp_server/server.py`, or Claude Code via `.mcp.json`);
+  - starting the backend (`cd backend && uvicorn main:app --reload --port 8000`) and the dashboard (`cd frontend && npm run dev`);
+  - a step-by-step run of all three tickets, the project layout and a safety summary.
+- **Checked before publishing:**
+  - all 35 required files present;
+  - nothing forbidden staged (`.env`, `.venv`, `node_modules`, settings);
+  - a secret scan of every staged file found no key patterns, and the real Portkey key value appears in no committed file.
+- **Published:** created the public repository **https://github.com/emilystrackhouse-lgtm/hw5** (branch `main`) with `gh` and pushed. Saved the URL in `output/github_url.txt`.
+- **Verified a grader's view:**
+  - visibility is PUBLIC, and an anonymous `git clone` works (68 files);
+  - `.env` is absent;
+  - both databases pass SQLite's integrity check (original checking $3,400, working copy $160);
+  - all five prompt files are present, and every `.py` file parses.
+- **Not done by Claude:** submitting the URL to Canvas, which the student does from their own Canvas account.
